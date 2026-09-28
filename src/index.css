@@ -1,0 +1,229 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-cream font-body text-ink antialiased;
+    /* Prevents any accidental horizontal scroll on mobile */
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    @apply font-display font-extrabold leading-tight tracking-tight text-ink;
+  }
+
+  /* Keyboard focus ring in brand pink */
+  :focus-visible {
+    @apply outline-none ring-4 ring-pink-200 ring-offset-2 ring-offset-cream;
+  }
+
+  /* Remove number input spinners for a cleaner form look */
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  /* Slim, cute scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-cream-200;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-pink-200;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-pink-300;
+  }
+
+  /* Never allow a child to force the page wider than the viewport */
+  #root {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+}
+
+@layer components {
+  /* ---------- Layout ---------- */
+  .container-sistara {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8;
+  }
+
+  /* ---------- Surfaces ---------- */
+  .card-soft {
+    @apply rounded-4xl border border-white/70 bg-white/80 shadow-card backdrop-blur-sm;
+  }
+
+  .card-doodle {
+    @apply relative rounded-4xl border-2 border-dashed border-pink-200 bg-white/70;
+  }
+
+  /* Pastel section backgrounds */
+  .bg-blob-pink {
+    background-image: radial-gradient(
+      42rem 26rem at 12% 18%,
+      rgba(255, 179, 199, 0.42),
+      transparent 62%
+    ),
+      radial-gradient(34rem 24rem at 88% 8%, rgba(203, 189, 250, 0.4), transparent 60%),
+      radial-gradient(30rem 22rem at 72% 88%, rgba(166, 216, 242, 0.36), transparent 62%);
+  }
+
+  .bg-blob-lavender {
+    background-image: radial-gradient(
+      40rem 26rem at 18% 12%,
+      rgba(203, 189, 250, 0.44),
+      transparent 62%
+    ),
+      radial-gradient(32rem 22rem at 84% 78%, rgba(255, 179, 199, 0.36), transparent 60%);
+  }
+
+  .bg-grid-paper {
+    background-image: linear-gradient(rgba(203, 189, 250, 0.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(203, 189, 250, 0.16) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    @apply inline-flex min-h-[48px] select-none items-center justify-center gap-2 rounded-full
+           px-6 py-3 text-center font-display text-base font-bold leading-none
+           transition-transform duration-200 ease-out active:scale-[0.97];
+  }
+
+  .btn-primary {
+    @apply btn bg-pink-300 text-ink shadow-pop hover:-translate-y-0.5 hover:bg-pink-400
+           hover:shadow-[0_16px_0_0_rgba(46,42,71,0.10)] active:translate-y-0 active:shadow-pop-sm;
+  }
+
+  .btn-secondary {
+    @apply btn border-2 border-lavender-300 bg-white/90 text-ink shadow-pop-sm
+           hover:-translate-y-0.5 hover:border-lavender-400 hover:bg-lavender-50
+           active:translate-y-0;
+  }
+
+  .btn-grape {
+    @apply btn bg-grape-300 text-white shadow-pop hover:-translate-y-0.5 hover:bg-grape-400 active:translate-y-0;
+  }
+
+  .btn-ghost {
+    @apply btn text-ink-soft hover:bg-pink-50;
+  }
+
+  .btn-sm {
+    @apply min-h-[42px] px-5 py-2.5 text-sm;
+  }
+
+  .btn-lg {
+    @apply min-h-[56px] px-8 py-4 text-lg;
+  }
+
+  /* ---------- Form fields ---------- */
+  .field-label {
+    @apply mb-1.5 block font-display text-sm font-bold text-ink;
+  }
+
+  .field {
+    @apply w-full rounded-2xl border-2 border-lavender-200 bg-white px-4 py-3.5
+           font-body text-base text-ink placeholder:text-ink-muted/70
+           transition-colors duration-200 focus:border-pink-300 focus:outline-none
+           focus:ring-4 focus:ring-pink-100;
+  }
+
+  .field-error {
+    @apply border-pink-400 focus:border-pink-400 focus:ring-pink-100;
+  }
+
+  .field-hint {
+    @apply mt-1.5 text-xs font-medium text-ink-muted;
+  }
+
+  .field-error-text {
+    @apply mt-1.5 flex items-center gap-1 text-xs font-semibold text-pink-600;
+  }
+
+  /* ---------- Badges & pills ---------- */
+  .pill {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 font-display text-xs font-bold;
+  }
+
+  /* ---------- Decorative text ---------- */
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Hide scrollbar for horizontal chip rows */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Respect users who don't want bold weight jumps */
+  .stroke-doodle {
+    -webkit-text-stroke: 1.5px currentColor;
+  }
+}
+
+@layer utilities {
+  /* Underline scribble for headings */
+  .scribble-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .scribble-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.1em;
+    width: 100%;
+    height: 0.32em;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8.5C22 3.5 44 2 62 5.5s38 4.5 56-1.5' fill='none' stroke='%23FFB3C7' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
+    z-index: -1;
+  }
+
+  /* Safe-area padding for notched phones */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
