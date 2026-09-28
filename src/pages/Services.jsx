@@ -3,6 +3,7 @@ import { Sparkles, ArrowRight } from 'lucide-react'
 import ServicesSection from '../components/home/ServicesSection'
 import HowItWorks from '../components/home/HowItWorks'
 import Button from '../components/ui/Button'
+import BrandLockup from '../components/brand/BrandLockup'
 import Mascot from '../components/brand/Mascot'
 import FloatingDecorations from '../components/decor/FloatingDecorations'
 import { services } from '../config/services'
@@ -16,6 +17,7 @@ const Services = () => (
       <div className="container-sistara relative">
         <div className="grid items-center gap-8 lg:grid-cols-[1.3fr_0.7fr]">
           <div>
+            <BrandLockup size="md" className="mb-5 justify-start" />
             <span className="pill border-2 border-dashed border-pink-200 bg-white/80 text-pink-600">
               <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
               {services.length} services

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import { Sparkles, Heart, ShieldCheck, Zap } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Sparkles, Heart, ShieldCheck, Zap, ArrowLeft } from 'lucide-react'
 import Logo from '../components/brand/Logo'
 import Mascot from '../components/brand/Mascot'
 import { LoginForm, SignupForm } from '../components/auth/AuthForms'
@@ -121,14 +122,26 @@ const AuthShell = ({ mode = 'login' }) => {
                 {isDemo && (
                   <p className="mt-4 rounded-2xl border-2 border-dashed border-sky-200 bg-sky-50 p-3 font-body text-xs font-semibold leading-relaxed text-sky-500">
                     <strong className="font-extrabold">Demo mode.</strong> Accounts are stored only
-                    in your browser, so nothing is sent anywhere. To go live, create a Supabase
-                    client and swap the method bodies in{' '}
+                    in your browser, so nothing is sent anywhere. &ldquo;Continue with Google&rdquo;
+                    signs you into a demo account, and password resets really do change your saved
+                    password. To go live, add a Supabase client and swap the method bodies in{' '}
                     <code className="rounded bg-sky-100 px-1 py-0.5 text-[11px]">src/services/authService.js</code>{' '}
                     — the screens stay as they are.
                   </p>
                 )}
               </div>
             </motion.aside>
+          </div>
+
+          {/* back to home — keeps the promised escape hatch on both auth screens */}
+          <div className="mt-7 flex justify-center">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-1.5 font-body text-sm font-bold text-ink-soft underline decoration-lavender-200 decoration-2 underline-offset-4 transition-colors hover:text-pink-600"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              Back to Home
+            </Link>
           </div>
         </div>
       </div>

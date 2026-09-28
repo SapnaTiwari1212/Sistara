@@ -14,7 +14,7 @@ import {
   Mail,
   LogOut,
 } from 'lucide-react'
-import Logo from '../components/brand/Logo'
+import BrandLockup from '../components/brand/BrandLockup'
 import Button from '../components/ui/Button'
 import Mascot from '../components/brand/Mascot'
 import OrderCard from '../components/dashboard/OrderCard'
@@ -27,7 +27,7 @@ import { formatINR, cn } from '../lib/utils'
 
 const QUICK_ACTIONS = [
   { to: '/order', icon: Plus, label: 'New Order', tone: 'bg-pink-300 text-ink' },
-  { to: '/my-orders', icon: PackageOpen, label: 'My Orders', tone: 'bg-lavender-300 text-ink' },
+  { to: '/orders', icon: PackageOpen, label: 'My Orders', tone: 'bg-lavender-300 text-ink' },
   { to: '/profile', icon: UserCircle2, label: 'Profile', tone: 'bg-sky-200 text-ink' },
   { to: '/contact', icon: LifeBuoy, label: 'Support', tone: 'bg-butter-200 text-ink' },
 ]
@@ -156,7 +156,7 @@ const Dashboard = () => {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="text-xl sm:text-2xl">Recent Orders</h2>
             {orders.length > 0 && (
-              <Button to="/my-orders" variant="ghost" size="sm">
+              <Button to="/orders" variant="ghost" size="sm">
                 View all
               </Button>
             )}
@@ -203,7 +203,7 @@ const Dashboard = () => {
 
         {/* footer nudge */}
         <div className="mt-8 flex flex-col items-center gap-3 rounded-4xl border-2 border-dashed border-lavender-200 bg-white/60 p-5 text-center">
-          <Logo size="sm" />
+          <BrandLockup size="sm" />
           <p className="font-body text-sm font-semibold text-ink-soft">
             Need something custom? We’re one message away.
           </p>
@@ -272,7 +272,7 @@ const Dashboard = () => {
               </div>
 
               <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
-                <Button to="/my-orders" fullWidth>
+                <Button to="/orders" fullWidth>
                   View My Orders
                 </Button>
                 <Button

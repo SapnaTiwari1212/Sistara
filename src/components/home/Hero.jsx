@@ -112,7 +112,7 @@ const Hero = () => {
                 Explore Services
               </Button>
               <Button
-                to="/order"
+                to="/services"
                 size="lg"
                 variant="secondary"
                 className="w-full sm:w-auto"

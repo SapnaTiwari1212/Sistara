@@ -134,7 +134,7 @@ const OrderSuccess = () => {
 
             {/* actions */}
             <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
-              <Button to="/my-orders" size="lg" fullWidth icon={PackageSearch}>
+              <Button to="/orders" size="lg" fullWidth icon={PackageSearch}>
                 View My Order
               </Button>
               <Button to="/" size="lg" variant="secondary" fullWidth icon={Home}>

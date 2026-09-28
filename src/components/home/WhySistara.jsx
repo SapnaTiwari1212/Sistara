@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react'
+import { Check, Sparkles } from 'lucide-react'
 import { Reveal, RevealGroup, RevealItem, Eyebrow } from '../ui/Reveal'
 import Button from '../ui/Button'
 import Mascot from '../brand/Mascot'
@@ -57,7 +57,7 @@ const WhySistara = () => (
             </div>
           </div>
 
-          <Button to="/order" className="mt-6" icon={undefined}>
+          <Button to="/services" className="mt-6" icon={Sparkles}>
             Start your order
           </Button>
         </Reveal>

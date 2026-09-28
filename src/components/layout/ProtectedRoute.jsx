@@ -1,8 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import Mascot from '../brand/Mascot'
-import Button from '../ui/Button'
-import Logo from '../brand/Logo'
 
 /** Soft loading + "please log in" gate for authenticated routes. */
 const ProtectedRoute = ({ children }) => {

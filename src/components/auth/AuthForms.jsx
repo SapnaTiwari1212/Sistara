@@ -68,6 +68,8 @@ export const LoginForm = () => {
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  // "Remember me" is not decoration — it decides how long the session lives.
+  const [remember, setRemember] = useState(true)
 
   const redirectTo = location.state?.from?.pathname || '/dashboard'
 
@@ -88,7 +90,7 @@ export const LoginForm = () => {
 
     setLoading(true)
     try {
-      await signIn(values)
+      await signIn({ ...values, remember })
       navigate(redirectTo, { replace: true })
     } catch (err) {
       setFormError(err.message)
@@ -159,17 +161,19 @@ export const LoginForm = () => {
         <label className="flex cursor-pointer items-center gap-2 font-body text-sm font-semibold text-ink-soft">
           <input
             type="checkbox"
-            defaultChecked
+            checked={remember}
+            onChange={(e) => setRemember(e.target.checked)}
             className="h-4 w-4 rounded-md border-2 border-lavender-300 text-pink-400 accent-pink-400"
           />
           Remember me
         </label>
-        <button
-          type="button"
+        <Link
+          to="/forgot-password"
+          state={location.state}
           className="font-body text-sm font-bold text-pink-600 underline decoration-pink-200 decoration-2 underline-offset-4"
         >
           Forgot?
-        </button>
+        </Link>
       </div>
 
       {formError && (

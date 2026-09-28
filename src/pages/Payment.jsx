@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { ShieldCheck, ArrowLeft, Receipt, FileText, Lock } from 'lucide-react'
 import Button from '../components/ui/Button'
 import PaymentCard, { PayButton } from '../components/payment/PaymentCard'
+import BrandLockup from '../components/brand/BrandLockup'
 import Mascot from '../components/brand/Mascot'
 import { useOrders } from '../context/OrderContext'
 import { useAuth } from '../context/AuthContext'
@@ -95,7 +96,7 @@ const Payment = () => {
             <Button to="/order" icon={Receipt}>
               Place a new order
             </Button>
-            <Button to="/my-orders" variant="secondary">
+            <Button to="/orders" variant="secondary">
               My Orders
             </Button>
           </div>
@@ -161,6 +162,7 @@ const Payment = () => {
           transition={{ duration: 0.45 }}
           className="text-center"
         >
+          <BrandLockup size="sm" className="mb-4" />
           <h1 className="text-balance text-3xl sm:text-4xl">
             Almost yours! <span aria-hidden="true">💳</span>
           </h1>

@@ -3,6 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Sparkles } from 'lucide-react'
 import OrderForm from '../components/order/OrderForm'
+import BrandLockup from '../components/brand/BrandLockup'
 import FloatingDecorations from '../components/decor/FloatingDecorations'
 import { useOrders } from '../context/OrderContext'
 import { getServiceById } from '../config/services'
@@ -32,6 +33,7 @@ const Order = () => {
           transition={{ duration: 0.45 }}
           className="mx-auto max-w-2xl text-center"
         >
+          <BrandLockup size="sm" className="mb-4" />
           <span className="pill border-2 border-dashed border-pink-200 bg-white/80 text-pink-600">
             <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
             {isAuthenticated ? 'Almost there' : 'Order in 1 minute'}

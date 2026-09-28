@@ -68,6 +68,22 @@ const saveUsers = (users) => store.set(USERS_KEY, users)
 const findUser = (email) =>
   getUsers().find((u) => u.email.toLowerCase() === String(email).trim().toLowerCase())
 
+/**
+ * Session persistence honours "Remember me".
+ * Remembered  → localStorage, so it survives a browser restart.
+ * Temporary  → sessionStorage, so closing the tab signs the user out.
+ * A remembered session always wins if both somehow exist.
+ */
+const readSession = () => store.get(SESSION_KEY, null) || store.temporary.get(SESSION_KEY, null)
+
+const writeSession = (session, remember = true) => {
+  store.clearBoth(SESSION_KEY)
+  if (remember) store.set(SESSION_KEY, session)
+  else store.temporary.set(SESSION_KEY, session)
+}
+
+const clearSession = () => store.clearBoth(SESSION_KEY)
+
 const makeSession = (user) => ({
   user: { id: user.id, name: user.name, email: user.email, phone: user.phone || '' },
   createdAt: new Date().toISOString(),
@@ -122,13 +138,16 @@ export const authService = {
   /** Returns the current session or null. */
   async getSession() {
     await delay(150)
-    return store.get(SESSION_KEY, null)
+    return readSession()
   },
 
-  async signUp({ name, email, phone, password }) {
+  async signUp({ name, email, phone, password, remember = true }) {
     await delay(800)
     if (findUser(email)) {
       throw new Error('An account with this email already exists. Try logging in.')
+    }
+    if (String(password).length < MIN_PASSWORD_LENGTH) {
+      throw new Error(`Password must be at least ${MIN_PASSWORD_LENGTH} characters.`)
     }
     const user = {
       id: `u_${Date.now().toString(36)}`,
@@ -140,18 +159,18 @@ export const authService = {
     }
     saveUsers([...getUsers(), user])
     const session = makeSession(user)
-    store.set(SESSION_KEY, session)
+    writeSession(session, remember)
     return session
   },
 
-  async signIn({ email, password }) {
+  async signIn({ email, password, remember = true }) {
     await delay(800)
     const user = findUser(email)
     if (!user) throw new Error('No account found with this email.')
     const hash = await hashPassword(password)
     if (hash !== user.passwordHash) throw new Error('Incorrect password. Please try again.')
     const session = makeSession(user)
-    store.set(SESSION_KEY, session)
+    writeSession(session, remember)
     return session
   },
 
@@ -184,7 +203,7 @@ export const authService = {
       saveUsers([...getUsers(), user])
     }
     const session = makeSession(user)
-    store.set(SESSION_KEY, session)
+    writeSession(session)
     return session
   },
 
@@ -251,22 +270,22 @@ export const authService = {
     users[index] = { ...users[index], passwordHash: await hashPassword(next) }
     saveUsers(users)
 
-    // Burn the token so the same link cannot be replayed, and drop any session
-    // that was created with the old password.
+    // Burn the token so the same link cannot be replayed, and sign the user out
+    // of any session that was created with the old password.
     store.set(RESETS_KEY, liveResets().filter((r) => r.email !== record.email))
-    store.remove(SESSION_KEY)
+    clearSession()
 
     return { updated: true, email: record.email }
   },
 
   async signOut() {
     await delay(200)
-    store.remove(SESSION_KEY)
+    clearSession()
   },
 
   async updateProfile(patch) {
     await delay(400)
-    const session = store.get(SESSION_KEY, null)
+    const session = readSession()
     if (!session) throw new Error('You are not signed in.')
     const users = getUsers()
     const index = users.findIndex((u) => u.id === session.user.id)
@@ -274,7 +293,9 @@ export const authService = {
     users[index] = { ...users[index], ...patch }
     saveUsers(users)
     const next = makeSession(users[index])
-    store.set(SESSION_KEY, next)
+    // Keep the session in whichever store it already lived, so a "don't
+    // remember me" login is not accidentally promoted to a persistent one.
+    writeSession(next, Boolean(store.get(SESSION_KEY, null)))
     return next
   },
 }

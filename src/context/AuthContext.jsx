@@ -72,9 +72,21 @@ export const AuthProvider = ({ children }) => {
       signInWithGoogle,
       signOut,
       updateProfile,
+      requestPasswordReset,
+      resetPassword,
       isDemo: authService.isDemo,
     }),
-    [session, loading, signUp, signIn, signInWithGoogle, signOut, updateProfile],
+    [
+      session,
+      loading,
+      signUp,
+      signIn,
+      signInWithGoogle,
+      signOut,
+      updateProfile,
+      requestPasswordReset,
+      resetPassword,
+    ],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
